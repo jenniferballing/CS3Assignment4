@@ -18,6 +18,9 @@
     <ClInclude Include="HashTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HashRecord.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HashTable.cpp">
@@ -26,5 +29,11 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HashRecord.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="green.txt" />
   </ItemGroup>
 </Project>

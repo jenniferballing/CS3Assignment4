@@ -24,8 +24,24 @@ public:
 	HashRecord * rec;
 	Status info;
 
-	HashEntry(HashRecord * hr = NULL, const HashKey & e = HashKey{}, Status i = EMPTY)
-		: key{ e }, rec{ hr }, info{ i } { }
+	HashEntry(HashRecord * hr, HashKey &e, Status i) : key{ e }, rec{ hr }, info{ i }
+	{
+		rec = hr;
+		key = e;// = HashKey{};
+		info = i;// = EMPTY;
+	}
+	HashEntry(HashRecord * hr, HashKey &e)
+	{
+		rec = hr;
+		key = e;// = HashKey{};
+		i = EMPTY;
+	}
+	HashEntry()
+	{
+		rec = NULL;
+		key = HashKey{};
+		info = EMPTY;
+	}
 };
 
 template <typename HashKey, typename HashRecord>

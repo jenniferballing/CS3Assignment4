@@ -65,10 +65,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="HashTable.h" />
+    <ClInclude Include="HashRecord.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HashTable.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="HashRecord.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="green.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
