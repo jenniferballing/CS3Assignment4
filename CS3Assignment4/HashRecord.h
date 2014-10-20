@@ -20,7 +20,7 @@ class HashRecord
 {
 	string word;
 	vector <Successor> successorList;
-	int occuranceCount;
+	///int occuranceCount;
 
 public:
 	//Constructors
@@ -30,12 +30,12 @@ public:
 	//Getters
 	string getWord(){ return word; }
 	vector<Successor> getSuccessorList(){ return successorList; }
-	int getOccuranceCount(){ return occuranceCount; }
+	//int getOccuranceCount(){ return occuranceCount; }
 
 	//Setters
 	void setWord(string w){ word = w; }
 	void setSuccessorList(vector<Successor> l){ successorList = l; }
-	void setOccuranceCount(int c){ occuranceCount = c; }
+	//void setOccuranceCount(int c){ occuranceCount = c; }
 
 	void insertSuccessor(Successor s);
 

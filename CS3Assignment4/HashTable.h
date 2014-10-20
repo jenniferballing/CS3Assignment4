@@ -63,7 +63,8 @@ private:
 	vector<HashEntry<HashKey, HashRecord>> hashTable;
 	int activeElements;
 	bool isActive(int currentPos) const;
-	size_t myhash(const HashKey & x) const;
+	size_t myHashOne(const HashKey & x) const;
+	size_t myHashTwo(const HashKey & x) const; 
 	int findPos(const HashKey & x) const;
 	void rehash();
 };
@@ -90,18 +91,18 @@ template <typename HashKey, typename HashRecord>
 int HashTable<HashKey, HashRecord>::findPos(const HashKey & x) const
 {
 	int offset = 1;
-	int currentPos = myhash(x);
+	int currentPos = myHashOne(x);
+	if (hashTable[currentPos].info == ACTIVE) currentPos = myHashTwo(x);
 
 	while (hashTable[currentPos].info != EMPTY &&
 		hashTable[currentPos].key != x)
 	{
-		currentPos += offset;  // Compute ith probe
-		offset += 2;
-		if (currentPos >= (int)hashTable.size())    // Cheaper than  mod
+		currentPos += offset; 
+		if (currentPos >= (int)hashTable.size())
+		{
 			currentPos -= hashTable.size();
-	}
-
-	return currentPos;
+		}
+	}return currentPos;
 };
 
 // Remove all elements of the table by setting status to empty.
@@ -143,14 +144,37 @@ bool HashTable<HashKey, HashRecord>::isActive(int currentPos) const
 	return hashTable[currentPos].info == ACTIVE;
 };
 
-// use built=in hash functions to fine a location.
+// First hash function
 template<typename HashKey, typename HashRecord>
-size_t HashTable<HashKey, HashRecord>::myhash(const HashKey & x) const
+size_t HashTable<HashKey, HashRecord>::myHashOne(const HashKey & x) const
 {
-	static hash<HashKey> hf;
-	return hf(x) % hashTable.size();
+	int sum = 0;
+	for (int i = 0; i < x.size(); i++)
+	{
+		//Sum Ascii values
+		sum += (int)x[i];
+	}
+
+	return sum % hashTable.size();
+	//static hash<HashKey> hf;
+	//return hf(x) % hashTable.size();
 };
 
+//Second hash function
+template<typename HashKey, typename HashRecord>
+size_t HashTable<HashKey, HashRecord>::myHashTwo(const HashKey & x) const
+{
+	int sum = 0;
+	for (int i = 0; i < x.size(); i++)
+	{
+		//Sum Ascii values
+		sum += (int)x[i];
+	}
+	int prime = hashTable.size();
+	return prime - (sum % prime);
+	//static hash<HashKey> hf;
+	//return hf(x) % hashTable.size();
+};
 // Use lazy deletion to remove an element
 // Return boolean to indicate success of operation
 template <typename HashKey, typename HashRecord>

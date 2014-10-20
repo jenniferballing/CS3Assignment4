@@ -8,28 +8,42 @@ using namespace std;
 int main()
 {
 	fstream fin;
-	string firstWord, secondWord;
+	string currentWord, nextWord;
 	fin.open("green.txt");
 
-	fin >> firstWord;
-	fin >> secondWord;
-	for (int i = 0; i < firstWord.length(); i++)
-	{
-		if (firstWord[i] >255 || firstWord[i] < 0 || ispunct(firstWord[i]))	firstWord.erase(i, 1);
-		else firstWord[i] = tolower(firstWord[i]);
-	}
-	for (int i = 0; i < secondWord.length(); i++)
-	{
-		if (secondWord[i] >255 || secondWord[i] < 0 || ispunct(secondWord[i]))	secondWord.erase(i, 1);
-		else secondWord[i] = tolower(secondWord[i]);
-	}
-
-	HashRecord* first = new HashRecord;
-	first->setWord(firstWord);
-	//first->insertSuccessor(secondWord);
-
 	HashTable <string, HashRecord> table;
-	//table.insert(firstWord, first);	
+	
+	//Get very currentRecord word
+	fin >> currentWord;
+
+	while (!fin.eof())
+	{
+		//Get successive words
+		fin >> nextWord;
+		
+		//Remove uppercase letters and punctuation
+		for (int i = 0; i < currentWord.length(); i++)
+		{
+			if (currentWord[i] >255 || currentWord[i] < 0 || ispunct(currentWord[i]))	currentWord.erase(i, 1);
+			else currentWord[i] = tolower(currentWord[i]);
+		}
+		for (int i = 0; i < nextWord.length(); i++)
+		{
+			if (nextWord[i] >255 || nextWord[i] < 0 || ispunct(nextWord[i]))	nextWord.erase(i, 1);
+			else nextWord[i] = tolower(nextWord[i]);
+		}
+
+		//Create instance of HashRecord for table
+		HashRecord* currentRecord = new HashRecord;
+		currentRecord->setWord(currentWord);
+		currentRecord->insertSuccessor(nextWord);
+
+		table.insert(currentWord, currentRecord);
+		
+		//Set new currentWord
+		currentWord = nextWord;
+	}
+	fin.close();
 	
 	return 0;
 }
