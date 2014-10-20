@@ -220,34 +220,6 @@ HashRecord * HashTable<HashKey, HashRecord>::insert(const HashKey x, HashRecord 
 
 	}
 
-		
-		//Check list for new successor value
-		/*for (int i = 0; i < add.size; i++)
-		{
-			if (newAdd == add[i]) add[i].occurances++;
-		}
-
-		hashTable[currentPos].rec->insertSuccessor(add[0]);*/
-		//HashRecord current = hashTable[currentPos];
-		//current.insertSuccessor(add[0]);
-
-
-		//HashRecord current = *hashTable[currentPos].insertSuccessor(add[0]);
-		/*vector<Successor> currentSuccessorList = repeat.getSuccessorList();
-		
-
-		bool found = false;
-		for (int i = 0; i < currentSuccessorList.size(); i++)
-		{
-			if (additionalSuccessorList[0] == currentSuccessorList[i])
-			{
-				currentSuccessorList[i].occurances++;
-				found = true;
-			}
-		}	
-		if (!found)
-		repeatSuccessorList.push_back()*/
-
 	// Rehash; see Section 5.5
 	if (++activeElements > (int)(hashTable.size() / 2))
 		rehash();
