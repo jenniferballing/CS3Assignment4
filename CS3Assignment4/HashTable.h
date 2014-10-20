@@ -6,6 +6,7 @@
 #include <functional>
 #include <string>
 #include <sstream>
+#include "HashRecord.h"
 using namespace std;
 
 int nextPrime(int n);
@@ -90,19 +91,26 @@ string HashTable<HashKey, HashRecord>::toString(int howMany)
 template <typename HashKey, typename HashRecord>
 int HashTable<HashKey, HashRecord>::findPos(const HashKey & x) const
 {
-	int offset = 1;
+	//Try first hash 
 	int currentPos = myHashOne(x);
-	if (hashTable[currentPos].info == ACTIVE) currentPos = myHashTwo(x);
 
-	while (hashTable[currentPos].info != EMPTY &&
-		hashTable[currentPos].key != x)
+	//If it is occupied with a different value do next hash
+	if (hashTable[currentPos].info == ACTIVE)
 	{
-		currentPos += offset; 
+		if (hashTable[currentPos].key != x)
+		{
+			currentPos = myHashTwo(x);
+		}		
+	}
+	while (hashTable[currentPos].info != EMPTY && hashTable[currentPos].key != x)
+	{
+		currentPos ++; 
 		if (currentPos >= (int)hashTable.size())
 		{
 			currentPos -= hashTable.size();
 		}
-	}return currentPos;
+	}
+	return currentPos;
 };
 
 // Remove all elements of the table by setting status to empty.
@@ -194,12 +202,51 @@ HashRecord * HashTable<HashKey, HashRecord>::insert(const HashKey x, HashRecord 
 {
 	// Insert x as active
 	int currentPos = findPos(x);
-	if (isActive(currentPos))
-		return NULL;
 
-	hashTable[currentPos].key = x;
-	hashTable[currentPos].rec = h;
-	hashTable[currentPos].info = ACTIVE;
+	//If it is a repeat
+	if (isActive(currentPos))
+	{
+		//Get the new value
+		vector<Successor> newVal = h->getSuccessorList();
+
+		//Insert successor
+		hashTable[currentPos].rec->insertSuccessor(newVal[0]);
+	}
+	else
+	{
+		hashTable[currentPos].key = x;
+		hashTable[currentPos].rec = h;
+		hashTable[currentPos].info = ACTIVE;
+
+	}
+
+		
+		//Check list for new successor value
+		/*for (int i = 0; i < add.size; i++)
+		{
+			if (newAdd == add[i]) add[i].occurances++;
+		}
+
+		hashTable[currentPos].rec->insertSuccessor(add[0]);*/
+		//HashRecord current = hashTable[currentPos];
+		//current.insertSuccessor(add[0]);
+
+
+		//HashRecord current = *hashTable[currentPos].insertSuccessor(add[0]);
+		/*vector<Successor> currentSuccessorList = repeat.getSuccessorList();
+		
+
+		bool found = false;
+		for (int i = 0; i < currentSuccessorList.size(); i++)
+		{
+			if (additionalSuccessorList[0] == currentSuccessorList[i])
+			{
+				currentSuccessorList[i].occurances++;
+				found = true;
+			}
+		}	
+		if (!found)
+		repeatSuccessorList.push_back()*/
 
 	// Rehash; see Section 5.5
 	if (++activeElements > (int)(hashTable.size() / 2))

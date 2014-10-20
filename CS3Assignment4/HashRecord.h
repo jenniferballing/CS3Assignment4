@@ -2,7 +2,8 @@
 #define HASHHashRecord_H
 
 #include<iostream>
-#include "HashTable.h"
+#include<vector>
+//#include "HashTable.h"
 
 using namespace std;
 struct Successor

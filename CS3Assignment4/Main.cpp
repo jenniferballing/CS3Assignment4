@@ -13,6 +13,7 @@ int main()
 
 	HashTable <string, HashRecord> table;
 	
+	
 	//Get very currentRecord word
 	fin >> currentWord;
 
@@ -22,19 +23,20 @@ int main()
 		fin >> nextWord;
 		
 		//Remove uppercase letters and punctuation
-		for (int i = 0; i < currentWord.length(); i++)
+		for (unsigned int i = 0; i < currentWord.length(); i++)
 		{
 			if (currentWord[i] >255 || currentWord[i] < 0 || ispunct(currentWord[i]))	currentWord.erase(i, 1);
 			else currentWord[i] = tolower(currentWord[i]);
 		}
-		for (int i = 0; i < nextWord.length(); i++)
+		for (unsigned int i = 0; i < nextWord.length(); i++)
 		{
 			if (nextWord[i] >255 || nextWord[i] < 0 || ispunct(nextWord[i]))	nextWord.erase(i, 1);
 			else nextWord[i] = tolower(nextWord[i]);
 		}
 
 		//Create instance of HashRecord for table
-		HashRecord* currentRecord = new HashRecord;
+ 		HashRecord* currentRecord = new HashRecord;
+		
 		currentRecord->setWord(currentWord);
 		currentRecord->insertSuccessor(nextWord);
 
