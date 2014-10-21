@@ -12,8 +12,8 @@ int main()
 {
 	HashTable <string, HashRecord> *table = new HashTable<string, HashRecord>();
 
-	inputPoem(5, table);
-	poem("go", 50, table);
+	inputPoem(4, table);
+	poem("mordecai", 50, table);
 
 
 	return 0;
@@ -22,7 +22,7 @@ int main()
 void poem(string s, int i, HashTable<string, HashRecord> *table)
 {
 	string current = s;
-	int count = 1, num = 0;;
+	int count = 1;
 	cout << s << " ";
 
 	vector <string> arr;
@@ -40,7 +40,6 @@ void poem(string s, int i, HashTable<string, HashRecord> *table)
 			for (int j = 0; j < first.occurances; j++)
 			{
 				arr.push_back(first.word);
-				num++;
 			}
 		}
 
@@ -51,8 +50,6 @@ void poem(string s, int i, HashTable<string, HashRecord> *table)
 
 		current = nextWord;
 		arr.clear();
-		num = 0;
-
 		count++;
 	}
 }
@@ -64,28 +61,28 @@ void inputPoem(int i, HashTable<string, HashRecord> *table)
 	if (i == 2) fin.open("poe.txt");
 	if (i == 3) fin.open("inch.txt");
 	if (i == 4) fin.open("Suess.txt");
-	if (i = 5) fin.open("clown.txt");
+	if (i == 5) fin.open("clown.txt");
 
 	string currentWord, nextWord;	
 
 	//Get very currentRecord word
 	fin >> currentWord;
+	for (unsigned int i = 0; i < currentWord.length(); i++)
+	{
+		if (currentWord[i] >255 || currentWord[i] < 0 || ispunct(currentWord[i]))	currentWord.erase(i, 1);
+		else currentWord[i] = tolower(currentWord[i]);
+	}	
 
 	while (!fin.eof())
 	{
 		//Get successive words
 		fin >> nextWord;
 
-		//Remove uppercase letters and punctuation
-		for (unsigned int i = 0; i < currentWord.length(); i++)
-		{
-			if (currentWord[i] >255 || currentWord[i] < 0 || ispunct(currentWord[i]))	currentWord.erase(i, 1);
-			else currentWord[i] = tolower(currentWord[i]);
-		}
+		//Remove uppercase letters and punctuation			
 		for (unsigned int i = 0; i < nextWord.length(); i++)
 		{
-			if (nextWord[i] >255 || nextWord[i] < 0 || ispunct(nextWord[i]))	nextWord.erase(i, 1);
-			else nextWord[i] = tolower(nextWord[i]);
+			if (nextWord[i] >64 && nextWord[i] < 91)nextWord[i] = tolower(nextWord[i]);
+			else if (ispunct(nextWord[i]))nextWord.erase(i, 1);
 		}
 
 		//Create instance of HashRecord for table
