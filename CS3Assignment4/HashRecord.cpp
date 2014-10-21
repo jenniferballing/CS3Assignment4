@@ -1,4 +1,5 @@
 #include "HashRecord.h"
+#include <sstream>
 
 
 HashRecord::HashRecord()
@@ -37,6 +38,22 @@ void HashRecord::insertSuccessor(Successor s)
 		tempVec.push_back(s);
 	}
 	this->setSuccessorList(tempVec);
+}
+string HashRecord::toString()
+{
+	return "Key: " + this->getWord() + "\n";
+	//cout << "Key: " << this->getWord() << endl;
+	/*for (unsigned int i = 0; i < this->getSuccessorList().size(); i++)
+	{
+		string s = this->getSuccessorList()[i].word;
+		int j = this->getSuccessorList()[i].occurances;
+
+		stringstream ss;
+		ss << j;
+		string newJ;
+		ss >> newJ;
+		
+	}*/
 }
 
 

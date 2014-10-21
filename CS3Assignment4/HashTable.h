@@ -75,16 +75,19 @@ template <typename HashKey, typename HashRecord>
 string HashTable<HashKey, HashRecord>::toString(int howMany)
 {
 	int ct = 0;
-	stringstream ss;
-	ss << "Current size " << hashTable.size() << endl;
+	string s = "";
+	s = "Current size " + to_string(hashTable.size()) + "\n";
 	for (int i = 0; i < hashTable.size() && ct < howMany; i++)
-		if (hashTable[i].info == ACTIVE){
-		ss << hashTable[i].rec->toString() << " ";
-		ct++;
+	{
+		if (hashTable[i].info == ACTIVE)
+		{
+			string string = hashTable[i].key;
+			int j = this->findPos(s);
+			s += hashTable[i].rec->toString() + " Location: " + to_string(j) + " \n";
+			ct++;
 		}
-	return ss.str();
-
-}
+	}return s;
+};
 
 // return the subscript where x is located in the hash table.    
 // Quadratic probing is used.  Can you figure out why this implements quadratic probing?

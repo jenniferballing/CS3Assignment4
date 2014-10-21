@@ -39,6 +39,7 @@ public:
 	//void setOccuranceCount(int c){ occuranceCount = c; }
 
 	void insertSuccessor(Successor s);
+	string toString();
 
 	~HashRecord();
 };

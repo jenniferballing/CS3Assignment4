@@ -10,10 +10,41 @@ void inputPoem(int i, HashTable<string, HashRecord> *table);
 void poem(string s, int i, HashTable<string, HashRecord> *table);
 int main()
 {
-	HashTable <string, HashRecord> *table = new HashTable<string, HashRecord>();
+	HashTable <string, HashRecord> *table = new HashTable<string, HashRecord>();	
+	//Print poem and hash table for green.txt
+	inputPoem(1, table);
+	cout << "green.txt poem: " << endl;
+	poem("sam", 20, table);
+	cout << endl << "HashTable after green.txt: " << table->toString() << endl;
+	cout << endl << endl;
+	
+	HashTable <string, HashRecord> *table1 = new HashTable<string, HashRecord>();
+	//Print poem and hash table for clown.txt
+	inputPoem(2, table1);
+	cout << "clown.txt poem: " << endl;
+	poem("go", 20, table1);
+	cout << endl << "HashTable after clown.txt: " << table1->toString() << endl;
+	cout << endl << endl;
 
-	inputPoem(4, table);
-	poem("mordecai", 50, table);
+	HashTable <string, HashRecord> *table2 = new HashTable<string, HashRecord>();
+	//Print poem for inch.txt
+	inputPoem(3, table2);
+	cout << "inch.txt poem: " << endl;
+	poem("computer", 50, table2);
+	cout << endl << endl;
+
+	HashTable <string, HashRecord> *table3 = new HashTable<string, HashRecord>();
+	//Print poem for poe.txt
+	inputPoem(4, table3);
+	cout << "Poe.txt poem: " << endl;
+	poem("nevermore", 50, table3);
+	cout << endl << endl;
+
+	HashTable <string, HashRecord> *table4 = new HashTable<string, HashRecord>();
+	//Print poem for Suess.txt
+	inputPoem(5, table4);
+	cout << "Suess.txt poem: " << endl;
+	poem("mordecai", 50, table4);
 
 
 	return 0;
@@ -34,10 +65,10 @@ void poem(string s, int i, HashTable<string, HashRecord> *table)
 		int size = record->getSuccessorList().size();
 		
 		//put values in array
-		for (int i = 0; i < size; i++)
+		for (int j = 0; j < size; j++)
 		{
-			Successor first  = record->getSuccessorList()[i];
-			for (int j = 0; j < first.occurances; j++)
+			Successor first  = record->getSuccessorList()[j];
+			for (int k = 0; k < first.occurances; k++)
 			{
 				arr.push_back(first.word);
 			}
@@ -54,14 +85,14 @@ void poem(string s, int i, HashTable<string, HashRecord> *table)
 	}
 }
 
-void inputPoem(int i, HashTable<string, HashRecord> *table)
+void inputPoem(int num, HashTable<string, HashRecord> *table)
 {
 	fstream fin;
-	if (i == 1) fin.open("green.txt");
-	if (i == 2) fin.open("poe.txt");
-	if (i == 3) fin.open("inch.txt");
-	if (i == 4) fin.open("Suess.txt");
-	if (i == 5) fin.open("clown.txt");
+	if (num == 1) fin.open("green.txt");
+	if (num == 4) fin.open("poe.txt");
+	if (num == 3) fin.open("inch.txt");
+	if (num == 5) fin.open("Suess.txt");
+	if (num == 2) fin.open("clown.txt");
 
 	string currentWord, nextWord;	
 
@@ -79,10 +110,14 @@ void inputPoem(int i, HashTable<string, HashRecord> *table)
 		fin >> nextWord;
 
 		//Remove uppercase letters and punctuation			
-		for (unsigned int i = 0; i < nextWord.length(); i++)
+		for (int i = 0; i < nextWord.length();)
 		{
-			if (nextWord[i] >64 && nextWord[i] < 91)nextWord[i] = tolower(nextWord[i]);
-			else if (ispunct(nextWord[i]))nextWord.erase(i, 1);
+			if (nextWord[i] >255 || nextWord[i] < 0 || ispunct(nextWord[i]))
+				nextWord.erase(i, 1);
+			else{
+				nextWord[i] = tolower(nextWord[i]);
+				i++;
+			}
 		}
 
 		//Create instance of HashRecord for table
@@ -91,6 +126,10 @@ void inputPoem(int i, HashTable<string, HashRecord> *table)
 		currentRecord->setWord(currentWord);
 		currentRecord->insertSuccessor(nextWord);
 
+		if (currentWord == "i")
+		{
+			cout << "";
+		}
 		table->insert(currentWord, currentRecord);
 
 		//Set new currentWord
