@@ -35,5 +35,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="green.txt" />
+    <Text Include="Poe.txt" />
+    <Text Include="inch.txt" />
+    <Text Include="Suess.txt" />
+    <Text Include="clown.txt" />
   </ItemGroup>
 </Project>

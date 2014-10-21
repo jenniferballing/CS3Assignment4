@@ -73,7 +73,11 @@
     <ClCompile Include="HashRecord.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="clown.txt" />
     <Text Include="green.txt" />
+    <Text Include="inch.txt" />
+    <Text Include="Poe.txt" />
+    <Text Include="Suess.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
